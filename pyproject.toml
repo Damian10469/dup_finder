@@ -1,6 +1,6 @@
 [project]
 name = "dup-finder"
-version = "0.1.0"
+version = "0.1.1"
 description = "Find duplicate files by size then hash, cheapest test first."
 requires-python = ">=3.10"
 dependencies = []
