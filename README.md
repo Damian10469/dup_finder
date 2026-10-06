@@ -24,3 +24,10 @@ Hashing every file is wasteful when most files are unique. Grouping by `stat` si
 - **Symlinks are skipped**, not followed. A symlink pointing at a real file would otherwise inflate the duplicate count, and a dangling symlink would crash the walker.
 - **Files that vanish mid-scan** (between the size check and the hash check) are silently dropped rather than raising. Temp files and concurrent writers make this a real possibility.
 - **Empty files** are treated as duplicates of each other if two or more exist. This is correct by the byte-for-byte definition, even if it is rarely what you want. Filter them out by checking `group.size == 0` if needed.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
